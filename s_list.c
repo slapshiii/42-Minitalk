@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 12:36:36 by user42            #+#    #+#             */
-/*   Updated: 2021/09/15 16:12:15 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/15 16:25:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,21 @@ void	write_byte(char is_usr1, t_client_l *client)
 		if (client->c)
 		{
 			client->str[client->len] = client->c;
-			++client->len;
-			if (client->len == client->size)
+			if (++client->len == client->size)
 			{
 				client->str = ft_realloc_str(client->str, client->size, \
 	client->size * 2);
 				client->size *= 2;
 			}
+			client->c = 0xFF;
+			client->byte = 0;
 		}
 		else
 		{
 			if (write(1, client->str, ft_strlen(client->str)) == -1)
 				perror("Write_byte");
 			remove_client(client->pid, &g_data.list);
-			return ;
 		}
-		client->c = 0xFF;
-		client->byte = 0;
 	}
 }
 
