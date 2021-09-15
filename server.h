@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:04:33 by user42            #+#    #+#             */
-/*   Updated: 2021/09/14 19:40:39 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/15 13:20:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@
 # define USR1 0
 # define USR2 1
 
-enum sig
+enum e_sig
 {
 	new_int = 0,
 	old_int,
-	new_usr1,
+	new_usr,
 	old_usr1,
-	new_usr2,
 	old_usr2
 };
 
@@ -50,21 +49,22 @@ typedef struct s_client_l
 typedef struct s_minitalk
 {
 	char				interrupt;
-	struct sigaction	signals[6];
+	sigset_t			blockmask;
+	struct sigaction	signals[5];
 	t_client_l			*list;
 }	t_minitalk;
 
-extern t_minitalk g_data;
+extern t_minitalk	g_data;
 
 t_client_l	*new_client(pid_t pid);
-t_client_l	*get_client(pid_t pid, t_minitalk *data);
-t_client_l	*remove_client(pid_t pid, t_minitalk *data);
-void	write_byte(char is_usr1, t_client_l *client);
-void	read_str(void);
+t_client_l	*get_client(pid_t pid, t_client_l **list);
+t_client_l	*remove_client(pid_t pid, t_client_l **list);
+void		write_byte(char is_usr1, t_client_l *client);
+void		read_str(void);
 
-void	*ft_memset(void *s, int c, size_t n);
-size_t	ft_strlen(char *str);
-char	*ft_itoa(int n, char *str, int base);
-char	*ft_realloc_str(char *ptr, size_t n);
+void		*ft_memset(void *s, int c, size_t n);
+size_t		ft_strlen(char *str);
+char		*ft_itoa(int n, char *str, int base);
+char		*ft_realloc_str(char *ptr, size_t prev_size, size_t new_size);
 
 #endif

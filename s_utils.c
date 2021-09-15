@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 11:06:25 by user42            #+#    #+#             */
-/*   Updated: 2021/09/14 15:05:33 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/14 20:23:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,25 @@ char	*ft_itoa(int n, char *str, int base)
 	return (reverse(str));
 }
 
-char	*ft_realloc_str(char *ptr, size_t n)
+char	*ft_realloc_str(char *ptr, size_t prev_size, size_t new_size)
 {
 	char	*res;
 	size_t	i;
 
-	if (ptr && ft_strlen(ptr) > n)
+	if (prev_size > new_size)
 		return (ptr);
-	res = (char *)malloc(sizeof(char) * n);
+	res = (char *)malloc(sizeof(char) * new_size);
 	if (res == NULL)
 		exit (1);
+	ft_memset(res, 0, new_size);
 	if (!ptr)
 		return (res);
 	i = 0;
-	while (ptr[i])
+	while (i < prev_size)
 	{
 		res[i] = ptr[i];
 		++i;
 	}
-	res[i] = '\0';
 	free(ptr);
 	return (res);
 }

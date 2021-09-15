@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:04:36 by user42            #+#    #+#             */
-/*   Updated: 2021/09/14 18:09:25 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/15 15:41:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,21 @@
 
 typedef struct s_client
 {
+	char	interrupt;
 	pid_t	s_pid;
 	int		bit;
-	int		len;
 	char	*msg;
 }	t_client;
 
-int	is_whitespace(char c);
-int	ft_atoi(const char *s);
+extern t_client	g_client;
+
+int		send_char(t_client *client);
+int		send_eof(pid_t pid);
+
+int		is_whitespace(char c);
+int		ft_atoi(const char *s);
+int		ft_isnum(const char *s);
+size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *s1);
 
 #endif

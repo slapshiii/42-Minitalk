@@ -6,73 +6,75 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:04:51 by user42            #+#    #+#             */
-/*   Updated: 2021/09/14 19:41:56 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/15 16:06:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client.h"
 
-void	sigusr1_handler(int sig)
+t_client	g_client;
+
+void	sigusr_handler(int sig)
 {
-	(void)sig;
-	return ;
+	int	is_finished;
+
+	is_finished = 0;
+	if (sig == SIGUSR1)
+		is_finished = send_char(&g_client);
+	if (is_finished)
+	{
+		exit(0);
+	}
 }
 
-int	send_char(t_client *client, char c)
+int	send_eof(pid_t pid)
 {
-	int	sig;
+	static int	bit = -1;
 
-	while (client->bit < 8)
+	if (++bit != 8)
 	{
-		if ((c >> (7 - client->bit)) & 0b1)
-			sig = SIGUSR2;
-		else
-			sig = SIGUSR1;
-		if (kill(client->s_pid, sig) == -1)
-			return (1);
-		pause();
+		if (kill(pid, SIGUSR1) == -1)
+			exit(1);
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
+int	send_char(t_client *client)
+{
+	if (client->msg[client->bit / 8])
+	{
+		if (client->msg[client->bit / 8] & (0x80 >> (client->bit % 8)))
+		{
+			if (kill(client->s_pid, SIGUSR2) == -1)
+				exit(1);
+		}
+		else if (kill(client->s_pid, SIGUSR1) == -1)
+			exit(1);
 		++client->bit;
+		return (FALSE);
 	}
-	client->bit = 0;
-	return (0);
-}
-
-int	send_msg(t_client *c)
-{
-	while (c->msg[c->len])
-	{
-		if (send_char(c, c->msg[c->len]))
-			return (1);
-		++c->len;
-	}
-	if (send_char(c, '\0'))
-		return (1);
-	return (0);
+	if (!send_eof(client->s_pid))
+		return (FALSE);
+	free(client->msg);
+	return (TRUE);
 }
 
 int	main(int ac, char **av)
 {
-	t_client	client;
 	sig_t		sig_usr1;
-	int			res;
 
-	sig_usr1 = signal(SIGUSR1, sigusr1_handler);
-	if (ac != 3)
+	sig_usr1 = signal(SIGUSR1, sigusr_handler);
+	if (ac != 3 || !ft_isnum(av[1]))
 	{
 		write(2, "client: usage: server_pid message_to_send.\n", 43);
 		return (1);
 	}
-	client.s_pid = (pid_t)ft_atoi(av[1]);
-	client.bit = 0;
-	client.len = 0;
-	client.msg = av[2];
-	if (client.s_pid < 2)
-	{
-		write(2, "client: error: server_pid is \
-suspicious, nothing has been done.\n", 64);
-		return (1);
-	}
-	res = send_msg(&client);
-	signal(SIGUSR1, sig_usr1);
-	return (res);
+	g_client.interrupt = FALSE;
+	g_client.s_pid = (pid_t)ft_atoi(av[1]);
+	g_client.bit = 0;
+	g_client.msg = ft_strdup(av[2]);
+	send_char(&g_client);
+	while (g_client.interrupt == FALSE)
+		pause();
 }

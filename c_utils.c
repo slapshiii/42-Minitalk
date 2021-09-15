@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:26:29 by user42            #+#    #+#             */
-/*   Updated: 2021/09/14 19:02:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/15 16:05:06 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,49 @@ int	ft_atoi(const char *s)
 		++s;
 	}
 	return (res * (-sig));
+}
+
+int	ft_isnum(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] > '9' || s[i] < '0')
+			return (0);
+		++i;
+	}
+	return (1);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		++i;
+	return (i);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	size_t	len;
+	size_t	i;
+	char	*res;
+
+	i = 0;
+	len = ft_strlen(s1);
+	res = (char *)malloc(sizeof(char) * (len + 1));
+	if (res)
+	{
+		while (s1[i])
+		{
+			res[i] = s1[i];
+			++i;
+		}
+		res[i] = '\0';
+	}
+	return (res);
 }
