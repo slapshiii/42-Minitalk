@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 12:36:36 by user42            #+#    #+#             */
-/*   Updated: 2021/09/15 16:25:57 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/16 21:36:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	write_byte(char is_usr1, t_client_l *client)
 {
-	if (is_usr1 == TRUE)
-		client->c ^= 0x80 >> client->byte;
-	else
+	if (is_usr1 != TRUE)
 		client->c |= 0x80 >> client->byte;
 	if (++client->byte == 8)
 	{
@@ -25,16 +23,15 @@ void	write_byte(char is_usr1, t_client_l *client)
 			client->str[client->len] = client->c;
 			if (++client->len == client->size)
 			{
-				client->str = ft_realloc_str(client->str, client->size, \
-	client->size * 2);
 				client->size *= 2;
+				client->str = realloc_s(client->str, client->len, client->size);
 			}
-			client->c = 0xFF;
+			client->c = 0x00;
 			client->byte = 0;
 		}
 		else
 		{
-			if (write(1, client->str, ft_strlen(client->str)) == -1)
+			if (write(1, client->str, client->len) == -1)
 				perror("Write_byte");
 			remove_client(client->pid, &g_data.list);
 		}
@@ -49,7 +46,7 @@ t_client_l	*new_client(pid_t pid)
 	if (res == NULL)
 		exit (1);
 	res->pid = pid;
-	res->c = 0xFF;
+	res->c = 0x00;
 	res->byte = 0;
 	res->size = 64;
 	res->len = 0;
@@ -73,7 +70,6 @@ t_client_l	*get_client(pid_t pid, t_client_l **list)
 		res = new_client(pid);
 		res->next = (*list);
 		(*list) = res;
-		return (res);
 	}
 	return (res);
 }

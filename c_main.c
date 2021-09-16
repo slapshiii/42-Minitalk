@@ -6,13 +6,20 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:04:51 by user42            #+#    #+#             */
-/*   Updated: 2021/09/15 16:06:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/16 21:36:06 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client.h"
 
 t_client	g_client;
+
+void	clean_exit(int sig)
+{
+	if (g_client.msg)
+		free(g_client.msg);
+	exit(sig);
+}
 
 void	sigusr_handler(int sig)
 {
@@ -23,18 +30,17 @@ void	sigusr_handler(int sig)
 		is_finished = send_char(&g_client);
 	if (is_finished)
 	{
-		exit(0);
+		clean_exit(0);
 	}
 }
 
 int	send_eof(pid_t pid)
 {
-	static int	bit = -1;
-
-	if (++bit != 8)
+	if (g_client.lastbit < 8)
 	{
+		++g_client.lastbit;
 		if (kill(pid, SIGUSR1) == -1)
-			exit(1);
+			clean_exit(1);
 		return (FALSE);
 	}
 	return (TRUE);
@@ -42,21 +48,21 @@ int	send_eof(pid_t pid)
 
 int	send_char(t_client *client)
 {
+	int	sig;
+
 	if (client->msg[client->bit / 8])
 	{
 		if (client->msg[client->bit / 8] & (0x80 >> (client->bit % 8)))
-		{
-			if (kill(client->s_pid, SIGUSR2) == -1)
-				exit(1);
-		}
-		else if (kill(client->s_pid, SIGUSR1) == -1)
-			exit(1);
+			sig = SIGUSR2;
+		else
+			sig = SIGUSR1;
 		++client->bit;
+		if (kill(client->s_pid, sig) == -1)
+			clean_exit(1);
 		return (FALSE);
 	}
 	if (!send_eof(client->s_pid))
 		return (FALSE);
-	free(client->msg);
 	return (TRUE);
 }
 
@@ -73,6 +79,7 @@ int	main(int ac, char **av)
 	g_client.interrupt = FALSE;
 	g_client.s_pid = (pid_t)ft_atoi(av[1]);
 	g_client.bit = 0;
+	g_client.lastbit = 0;
 	g_client.msg = ft_strdup(av[2]);
 	send_char(&g_client);
 	while (g_client.interrupt == FALSE)

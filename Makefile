@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/14 09:50:50 by user42            #+#    #+#              #
-#    Updated: 2021/09/14 21:47:20 by user42           ###   ########.fr        #
+#    Updated: 2021/09/16 21:16:48 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJS_C = $(SRCS_C:c_%.c=c_%.o)
 
 OBJS_S = $(SRCS_S:s_%.c=s_%.o)
 
-CFLAGS += -Wall -Werror -Wextra -O -g3
+CFLAGS += -Wall -Werror -Wextra
 
 CC := clang
 

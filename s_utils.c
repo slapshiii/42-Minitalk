@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 11:06:25 by user42            #+#    #+#             */
-/*   Updated: 2021/09/14 20:23:52 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/16 19:44:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*ft_itoa(int n, char *str, int base)
 	return (reverse(str));
 }
 
-char	*ft_realloc_str(char *ptr, size_t prev_size, size_t new_size)
+char	*realloc_s(char *ptr, size_t prev_size, size_t new_size)
 {
 	char	*res;
 	size_t	i;

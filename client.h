@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:04:36 by user42            #+#    #+#             */
-/*   Updated: 2021/09/15 15:41:46 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/16 20:56:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_client
 	char	interrupt;
 	pid_t	s_pid;
 	int		bit;
+	int		lastbit;
 	char	*msg;
 }	t_client;
 

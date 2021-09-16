@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:04:33 by user42            #+#    #+#             */
-/*   Updated: 2021/09/15 13:20:12 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/16 19:44:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ void		read_str(void);
 void		*ft_memset(void *s, int c, size_t n);
 size_t		ft_strlen(char *str);
 char		*ft_itoa(int n, char *str, int base);
-char		*ft_realloc_str(char *ptr, size_t prev_size, size_t new_size);
+char		*realloc_s(char *ptr, size_t prev_size, size_t new_size);
 
 #endif
