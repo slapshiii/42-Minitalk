@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:04:33 by user42            #+#    #+#             */
-/*   Updated: 2021/09/16 19:44:33 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/16 22:11:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <sys/types.h>
-
-# include <stdio.h>
 
 # define TRUE 1
 # define FALSE 0
@@ -55,6 +53,8 @@ typedef struct s_minitalk
 }	t_minitalk;
 
 extern t_minitalk	g_data;
+
+void		clean_exit(int sig);
 
 t_client_l	*new_client(pid_t pid);
 t_client_l	*get_client(pid_t pid, t_client_l **list);

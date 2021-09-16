@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:02:38 by user42            #+#    #+#             */
-/*   Updated: 2021/09/16 21:36:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/16 22:21:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 
 t_minitalk	g_data;
 
-void	sigint_handler(int sig)
+void	clean_exit(int sig)
 {
 	t_client_l	*res;
 	t_client_l	*tofree;
 
-	(void)sig;
 	res = (g_data.list);
-	g_data.interrupt = TRUE;
 	while (res)
 	{
 		tofree = res;
@@ -34,7 +32,14 @@ void	sigint_handler(int sig)
 	sigaction(SIGINT, &g_data.signals[old_int], NULL);
 	sigaction(SIGUSR1, &g_data.signals[old_usr1], NULL);
 	sigaction(SIGUSR2, &g_data.signals[old_usr2], NULL);
-	exit(0);
+	exit(sig);
+}
+
+void	sigint_handler(int sig)
+{
+	(void)sig;
+	g_data.interrupt = TRUE;
+	clean_exit(0);
 }
 
 void	sigusr_handler(int sig, siginfo_t *info, void *context)
@@ -48,7 +53,7 @@ void	sigusr_handler(int sig, siginfo_t *info, void *context)
 	else
 		write_byte(FALSE, c);
 	if (kill(info->si_pid, SIGUSR1))
-		exit(1);
+		clean_exit(1);
 }
 
 void	init(t_minitalk *data)
@@ -66,7 +71,7 @@ void	init(t_minitalk *data)
 		|| sigaction(SIGUSR2, &data->signals[new_usr],
 			&data->signals[old_usr2]) == -1
 	)
-		exit(1);
+		clean_exit(1);
 }
 
 int	main(void)

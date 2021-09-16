@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/14 09:50:50 by user42            #+#    #+#              #
-#    Updated: 2021/09/16 21:16:48 by user42           ###   ########.fr        #
+#    Updated: 2021/09/16 22:23:40 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,9 @@ fclean: clean
 re: fclean all
 
 norm:
-	-norminette $(SRCS_C) $(SRCS_S) server.h client.h
+	-norminette server.h client.h
+	-norminette $(SRCS_S)
+	-norminette $(SRCS_C)
 
 .PHONY: all clean fclean re norm
 
