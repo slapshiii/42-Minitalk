@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:04:51 by user42            #+#    #+#             */
-/*   Updated: 2021/09/16 21:36:06 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/17 12:03:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	sigusr_handler(int sig)
 {
 	int	is_finished;
 
+	usleep(2);
 	is_finished = 0;
 	if (sig == SIGUSR1)
 		is_finished = send_char(&g_client);

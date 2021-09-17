@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:02:38 by user42            #+#    #+#             */
-/*   Updated: 2021/09/16 22:21:46 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/17 12:03:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	sigusr_handler(int sig, siginfo_t *info, void *context)
 	t_client_l	*c;
 
 	(void)context;
+	usleep(2);
 	c = get_client(info->si_pid, &(g_data.list));
 	if (sig == SIGUSR1)
 		write_byte(TRUE, c);
