@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
+#    By: phnguyen <phnguyen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/14 09:50:50 by user42            #+#    #+#              #
-#    Updated: 2021/09/16 22:23:40 by user42           ###   ########.fr        #
+#    Updated: 2021/10/01 15:32:46 by phnguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,12 @@ OBJS_S = $(SRCS_S:s_%.c=s_%.o)
 
 CFLAGS += -Wall -Werror -Wextra
 
-CC := clang
+UNAME := $(shell uname)
+ifeq ($(UNAME), Darwin)
+	CC		:=	gcc
+else
+	CC		:=	clang
+endif
 
 all: $(NAME) $(NAME_C)
 
