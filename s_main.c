@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   s_main.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: phnguyen <phnguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:02:38 by user42            #+#    #+#             */
-/*   Updated: 2021/09/17 12:03:48 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/01 15:40:20 by phnguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,6 @@ t_minitalk	g_data;
 
 void	clean_exit(int sig)
 {
-	t_client_l	*res;
-	t_client_l	*tofree;
-
-	res = (g_data.list);
-	while (res)
-	{
-		tofree = res;
-		res = res->next;
-		free(tofree->str);
-		free(tofree);
-		tofree = NULL;
-	}
 	sigaction(SIGINT, &g_data.signals[old_int], NULL);
 	sigaction(SIGUSR1, &g_data.signals[old_usr1], NULL);
 	sigaction(SIGUSR2, &g_data.signals[old_usr2], NULL);

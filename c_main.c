@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   c_main.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: phnguyen <phnguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:04:51 by user42            #+#    #+#             */
-/*   Updated: 2021/09/17 12:03:53 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/01 15:44:57 by phnguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	send_eof(pid_t pid)
 			clean_exit(1);
 		return (FALSE);
 	}
+	pause();
 	return (TRUE);
 }
 

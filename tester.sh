@@ -1,13 +1,13 @@
 #!/bin/sh
 
-for i in `seq 1 500`; do
+for i in `seq 1 5000`; do
 	./client $1 "test"
 	echo "req $i"
 done
 
 ./client $1 $'\n'
 
-for i in `seq 1 5`; do
+for i in `seq 1 20`; do
 	./client $1 "$(cat -e Makefile)"
 	echo "req $i"
 done
