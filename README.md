@@ -1,4 +1,4 @@
-# 42cursus - minitalk
+# 42cursus - minitalk v.1
 
 ## Project Information
 
