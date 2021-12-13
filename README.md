@@ -7,7 +7,9 @@
 
 ### About
 
-The purpose of this project is to code a small data exchange program using *UNIX signals*.
+> The purpose of this project is to code a small data exchange program using *UNIX signals*.
+
+This project is about handling UNIX signal and ensure the integrity of the data with several simultaneous clients.
 
 ### Mandatory
 
