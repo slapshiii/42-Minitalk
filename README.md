@@ -1,5 +1,8 @@
 # 42cursus - minitalk v.1
 
+![](https://img.shields.io/badge/eval-125%25-brightgreen)
+![](https://img.shields.io/badge/norminette%203.3.50-passing-brightgreen)
+
 ## Project Information
 
 ### About
